@@ -17,28 +17,38 @@ struct Vertex {
 class Output: NSObject, SCStreamOutput, SCStreamDelegate {
     var stream: SCStream!
     var textureCache: CVMetalTextureCache?
+    var display: SCDisplay!
     
     override init() {
         super.init()
         setupTextureCache()
+    }
     
-        let available = try await SCShareableContent.getExcludingDesktopWindows(false, onScreenWindowsOnly: false, completionHandler: )
-        let display: SCDisplay
-        let filter = SCContentFilter(display: display, including: [])
+    func start() async{
+            await getAvailable()
         
-        let config = SCStreamConfiguration()
-        
-        config.capturesAudio = false
-        
-        config.width = 3456
-        config.height = 2234
-        
-        config.minimumFrameInterval = CMTime(value: 1, timescale: 120)
-        
-        stream = SCStream(filter: SCContentFilter(), configuration: config, delegate: self)
-        
-        stream.startCapture()
-        try! stream.addStreamOutput(self, type: .screen, sampleHandlerQueue: .main)
+            let filter = SCContentFilter(display: display, including: [])
+            
+            let config = SCStreamConfiguration()
+            
+            config.capturesAudio = false
+            
+            config.width = 3456
+            config.height = 2234
+            
+            config.minimumFrameInterval = CMTime(value: 1, timescale: 120)
+            
+            stream = SCStream(filter: filter, configuration: config, delegate: self)
+            
+            try! await stream.startCapture()
+            try! stream.addStreamOutput(self, type: .screen, sampleHandlerQueue: DispatchQueue(label: "StreamPatchQueue"))
+    }
+    
+    func getAvailable() async {
+        do {
+            let available: SCShareableContent = try await SCShareableContent.excludingDesktopWindows(false, onScreenWindowsOnly: true)
+            display = available.displays.first
+        } catch let error as NSError { print(error) }
     }
     
     func setupTextureCache() {
@@ -102,6 +112,8 @@ class EffectView: MTKView {
         createRenderPipelineState()
         
         output = Output()
+
+        Task(operation: output.start)
     }
     
     func createRenderPipelineState() {
