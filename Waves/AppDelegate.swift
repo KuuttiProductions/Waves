@@ -7,14 +7,29 @@
 
 import Cocoa
 
+class ViewyController: NSViewController {
+    override func viewDidLoad() {
+        
+    }
+}
+
+class OverlayWindowController: NSWindowController {
+    override func windowDidLoad() {
+        let window = self.window
+        window?.backgroundColor = .clear
+        window?.hasShadow = false
+        window?.level = .screenSaver
+        window?.setFrame(NSScreen.main!.frame, display: true)
+        
+        window?.ignoresMouseEvents = true
+    }
+}
+
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {
 
-    
-
-
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        // Insert code here to initialize your application
+
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {

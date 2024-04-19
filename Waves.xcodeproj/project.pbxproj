@@ -8,18 +8,20 @@
 
 /* Begin PBXBuildFile section */
 		516A629C2BD2A5E2003C3C5E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516A629B2BD2A5E2003C3C5E /* AppDelegate.swift */; };
-		516A629E2BD2A5E2003C3C5E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516A629D2BD2A5E2003C3C5E /* ViewController.swift */; };
 		516A62A02BD2A5E3003C3C5E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 516A629F2BD2A5E3003C3C5E /* Assets.xcassets */; };
 		516A62A32BD2A5E3003C3C5E /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 516A62A22BD2A5E3003C3C5E /* Base */; };
+		516A62AB2BD2A7FA003C3C5E /* EffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516A62AA2BD2A7FA003C3C5E /* EffectView.swift */; };
+		516A62AD2BD2AC67003C3C5E /* WaveShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = 516A62AC2BD2AC67003C3C5E /* WaveShader.metal */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		516A62982BD2A5E2003C3C5E /* Waves.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Waves.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		516A629B2BD2A5E2003C3C5E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		516A629D2BD2A5E2003C3C5E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		516A629F2BD2A5E3003C3C5E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		516A62A22BD2A5E3003C3C5E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		516A62A42BD2A5E3003C3C5E /* Waves.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Waves.entitlements; sourceTree = "<group>"; };
+		516A62AA2BD2A7FA003C3C5E /* EffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EffectView.swift; sourceTree = "<group>"; };
+		516A62AC2BD2AC67003C3C5E /* WaveShader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = WaveShader.metal; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,7 +55,8 @@
 			isa = PBXGroup;
 			children = (
 				516A629B2BD2A5E2003C3C5E /* AppDelegate.swift */,
-				516A629D2BD2A5E2003C3C5E /* ViewController.swift */,
+				516A62AA2BD2A7FA003C3C5E /* EffectView.swift */,
+				516A62AC2BD2AC67003C3C5E /* WaveShader.metal */,
 				516A629F2BD2A5E3003C3C5E /* Assets.xcassets */,
 				516A62A12BD2A5E3003C3C5E /* Main.storyboard */,
 				516A62A42BD2A5E3003C3C5E /* Waves.entitlements */,
@@ -131,8 +134,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				516A629E2BD2A5E2003C3C5E /* ViewController.swift in Sources */,
+				516A62AB2BD2A7FA003C3C5E /* EffectView.swift in Sources */,
 				516A629C2BD2A5E2003C3C5E /* AppDelegate.swift in Sources */,
+				516A62AD2BD2AC67003C3C5E /* WaveShader.metal in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,6 +284,7 @@
 				DEVELOPMENT_TEAM = B8J394Q4M8;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
@@ -307,6 +312,7 @@
 				DEVELOPMENT_TEAM = B8J394Q4M8;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
