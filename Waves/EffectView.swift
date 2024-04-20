@@ -18,6 +18,7 @@ class Output: NSObject, SCStreamOutput, SCStreamDelegate {
     var stream: SCStream!
     var textureCache: CVMetalTextureCache?
     var display: SCDisplay!
+    var excluded: [SCRunningApplication]!
     
     override init() {
         super.init()
@@ -25,29 +26,38 @@ class Output: NSObject, SCStreamOutput, SCStreamDelegate {
     }
     
     func start() async{
-            await getAvailable()
+        await getAvailable()
+    
+        let filter = SCContentFilter(display: display, excludingApplications: excluded, exceptingWindows: [])
         
-            let filter = SCContentFilter(display: display, including: [])
-            
-            let config = SCStreamConfiguration()
-            
-            config.capturesAudio = false
-            
-            config.width = 3456
-            config.height = 2234
-            
-            config.minimumFrameInterval = CMTime(value: 1, timescale: 120)
-            
-            stream = SCStream(filter: filter, configuration: config, delegate: self)
-            
-            try! await stream.startCapture()
-            try! stream.addStreamOutput(self, type: .screen, sampleHandlerQueue: DispatchQueue(label: "StreamPatchQueue"))
+        let config = SCStreamConfiguration()
+        
+        config.capturesAudio = false
+        
+        config.width = display.width * 2
+        config.height = display.height * 2
+
+        config.captureResolution = SCCaptureResolutionType.best
+        
+        config.minimumFrameInterval = CMTime(value: 1, timescale: 60)
+        
+        config.pixelFormat = kCVPixelFormatType_32BGRA
+        
+        config.showsCursor = false
+        
+        stream = SCStream(filter: filter, configuration: config, delegate: self)
+        
+        try! stream.addStreamOutput(self, type: .screen, sampleHandlerQueue: DispatchQueue(label: "StreamPatchQueue"))
+        try! await stream.startCapture()
     }
     
     func getAvailable() async {
         do {
-            let available: SCShareableContent = try await SCShareableContent.excludingDesktopWindows(false, onScreenWindowsOnly: true)
+            let available: SCShareableContent = try await SCShareableContent.excludingDesktopWindows(false, onScreenWindowsOnly: false)
             display = available.displays.first
+            excluded = available.applications.filter { app in
+                Bundle.main.bundleIdentifier == app.bundleIdentifier
+            }
         } catch let error as NSError { print(error) }
     }
     
@@ -58,7 +68,6 @@ class Output: NSObject, SCStreamOutput, SCStreamDelegate {
     }
     
     func stream(_ stream: SCStream, didOutputSampleBuffer sampleBuffer: CMSampleBuffer, of type: SCStreamOutputType) {
-        print("STREAM")
         guard sampleBuffer.isValid else { return }
         
         switch type {

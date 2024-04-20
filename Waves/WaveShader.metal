@@ -27,7 +27,9 @@ vertex VertexOut wave_vertex(VertexIn verIn [[ stage_in ]]) {
     return verOut;
 }
 
-constexpr sampler sampler2d = sampler();
+constexpr sampler sampler2d = sampler(address::clamp_to_zero,
+                                      min_filter::linear,
+                                      mag_filter::linear);
 
 fragment half4 wave_fragment(VertexOut verIn [[ stage_in]],
                              constant float &time [[ buffer(1) ]],
@@ -35,8 +37,9 @@ fragment half4 wave_fragment(VertexOut verIn [[ stage_in]],
     
     half4 color = half4();
     
-    //float wave = sin(verIn.textureCoordinate.x * 100 + time * 10) * 0.5 + 0.5;
-    color = half4(source.sample(sampler2d, verIn.textureCoordinate + float2(0.1, 0.1)));
+    float wave = sin(verIn.textureCoordinate.x * 30 + time * 2) * 0.5 + 0.5;
+    float4 sample = float4(float3(source.sample(sampler2d, verIn.textureCoordinate + float2(wave * 0.01, wave * 0.01))), 1.0);
+    color = half4(sample.r, sample.g, sample.b, sample.a);
     
     return color;
 }
