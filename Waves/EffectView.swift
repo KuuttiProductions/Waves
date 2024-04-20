@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 import MetalKit
 
 struct Vertex {
@@ -15,8 +16,8 @@ struct Vertex {
 
 struct FragmentConstants {
     var time: Float
-    var resX: Int
-    var resY: Int
+    var resX: Float
+    var resY: Float
     
     init() {
         time = 0
@@ -26,23 +27,22 @@ struct FragmentConstants {
 }
 
 class EffectView: MTKView {
-    var renderer: Renderer!
-    static var device: MTLDevice!
-    static var commandQueue: MTLCommandQueue!
-    
+    var renderer: Renderer = Renderer()
     required init(coder: NSCoder) {
         super.init(coder: coder)
-        self.device = MTLCreateSystemDefaultDevice()
-        EffectView.device = device
-        EffectView.commandQueue = device!.makeCommandQueue()
+        if let device = MTLCreateSystemDefaultDevice() {
+            self.device = device
+        }
+        
+        self.delegate = renderer
+        Renderer.device = self.device
+        Renderer.commandQueue = Renderer.device.makeCommandQueue()
         
         self.colorPixelFormat = .bgra8Unorm
         self.clearColor = .init(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0)
-        self.preferredFramesPerSecond = 120
+        self.preferredFramesPerSecond = 60
         
-        renderer = Renderer()
-        self.delegate = renderer
-        
-        let lib = RPStateLibrary.init()
+        let lib = RPStateLibrary()
+        lib.initialize()
     }
 }

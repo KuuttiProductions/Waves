@@ -12,7 +12,8 @@ class Output: NSObject, SCStreamOutput, SCStreamDelegate {
     var stream: SCStream!
     var textureCache: CVMetalTextureCache?
     var display: SCDisplay!
-    var excluded: [SCRunningApplication]!
+    var apps: [SCRunningApplication]!
+    var excepted: [SCWindow]!
     
     override init() {
         super.init()
@@ -22,7 +23,7 @@ class Output: NSObject, SCStreamOutput, SCStreamDelegate {
     func start() async{
         await getAvailable()
     
-        let filter = SCContentFilter(display: display, excludingApplications: excluded, exceptingWindows: [])
+        let filter = SCContentFilter(display: display, excludingApplications: apps, exceptingWindows: excepted)
         
         let config = SCStreamConfiguration()
         
@@ -49,15 +50,18 @@ class Output: NSObject, SCStreamOutput, SCStreamDelegate {
         do {
             let available: SCShareableContent = try await SCShareableContent.excludingDesktopWindows(false, onScreenWindowsOnly: false)
             display = available.displays.first
-            excluded = available.applications.filter { app in
+            apps = available.applications.filter { app in
                 Bundle.main.bundleIdentifier == app.bundleIdentifier
+            }
+            excepted = available.windows.filter { window in
+                window.owningApplication?.bundleIdentifier == Bundle.main.bundleIdentifier
             }
         } catch let error as NSError { print(error) }
     }
     
     func setupTextureCache() {
         var cache: CVMetalTextureCache?
-        guard CVMetalTextureCacheCreate(kCFAllocatorDefault, nil, EffectView.device, nil, &cache) == kCVReturnSuccess else { return }
+        guard CVMetalTextureCacheCreate(kCFAllocatorDefault, nil, Renderer.device, nil, &cache) == kCVReturnSuccess else { return }
         textureCache = cache
     }
     

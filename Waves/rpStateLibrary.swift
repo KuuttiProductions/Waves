@@ -27,22 +27,24 @@ class VertexDescriptor {
     }
 }
 
-enum ShaderType {
-    case Underwater
-    case CosmicSwirl
+enum ShaderType: String, CaseIterable {
+    case Underwater = "Underwater"
+    case Rage = "RAGE"
+    case CosmicSwirl = "Glitch"
 }
 
 class RPStateLibrary {
-    var shaderLib = EffectView.device?.makeDefaultLibrary()
+    var shaderLib = Renderer.device?.makeDefaultLibrary()
     var vertexShader: MTLFunction!
     var descriptor: MTLVertexDescriptor = VertexDescriptor().vertexDescriptor
     
     static private var _library: [ShaderType : RPState] = [:]
     
-    init() {
+    func initialize() {
         vertexShader = shaderLib!.makeFunction(name: "wave_vertex")
         RPStateLibrary._library.updateValue(RPState(shaderName: "wave_fragment", lib: self), forKey: .Underwater)
         RPStateLibrary._library.updateValue(RPState(shaderName: "cosmic_swirl_fragment", lib: self), forKey: .CosmicSwirl)
+        RPStateLibrary._library.updateValue(RPState(shaderName: "rage_fragment", lib: self), forKey: .Rage)
     }
     
     static func getPipeline(shader: ShaderType)-> MTLRenderPipelineState {
@@ -60,7 +62,7 @@ class RPState {
         descriptor.fragmentFunction = lib.shaderLib?.makeFunction(name: shaderName)
         
         do {
-            rpState = try EffectView.device.makeRenderPipelineState(descriptor: descriptor)
+            rpState = try Renderer.device.makeRenderPipelineState(descriptor: descriptor)
         } catch let error as NSError { print(error) }
     }
 }
