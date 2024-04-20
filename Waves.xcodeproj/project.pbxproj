@@ -12,6 +12,9 @@
 		516A62A32BD2A5E3003C3C5E /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 516A62A22BD2A5E3003C3C5E /* Base */; };
 		516A62AB2BD2A7FA003C3C5E /* EffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516A62AA2BD2A7FA003C3C5E /* EffectView.swift */; };
 		516A62AD2BD2AC67003C3C5E /* WaveShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = 516A62AC2BD2AC67003C3C5E /* WaveShader.metal */; };
+		516A62AF2BD3A8BC003C3C5E /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516A62AE2BD3A8BC003C3C5E /* Renderer.swift */; };
+		516A62B12BD3A960003C3C5E /* CaptureOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516A62B02BD3A960003C3C5E /* CaptureOutput.swift */; };
+		516A62B32BD3AF79003C3C5E /* rpStateLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516A62B22BD3AF79003C3C5E /* rpStateLibrary.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +25,9 @@
 		516A62A42BD2A5E3003C3C5E /* Waves.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Waves.entitlements; sourceTree = "<group>"; };
 		516A62AA2BD2A7FA003C3C5E /* EffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EffectView.swift; sourceTree = "<group>"; };
 		516A62AC2BD2AC67003C3C5E /* WaveShader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = WaveShader.metal; sourceTree = "<group>"; };
+		516A62AE2BD3A8BC003C3C5E /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
+		516A62B02BD3A960003C3C5E /* CaptureOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureOutput.swift; sourceTree = "<group>"; };
+		516A62B22BD3AF79003C3C5E /* rpStateLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = rpStateLibrary.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +62,9 @@
 			children = (
 				516A629B2BD2A5E2003C3C5E /* AppDelegate.swift */,
 				516A62AA2BD2A7FA003C3C5E /* EffectView.swift */,
+				516A62AE2BD3A8BC003C3C5E /* Renderer.swift */,
+				516A62B02BD3A960003C3C5E /* CaptureOutput.swift */,
+				516A62B22BD3AF79003C3C5E /* rpStateLibrary.swift */,
 				516A62AC2BD2AC67003C3C5E /* WaveShader.metal */,
 				516A629F2BD2A5E3003C3C5E /* Assets.xcassets */,
 				516A62A12BD2A5E3003C3C5E /* Main.storyboard */,
@@ -134,6 +143,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				516A62AF2BD3A8BC003C3C5E /* Renderer.swift in Sources */,
+				516A62B32BD3AF79003C3C5E /* rpStateLibrary.swift in Sources */,
+				516A62B12BD3A960003C3C5E /* CaptureOutput.swift in Sources */,
 				516A62AB2BD2A7FA003C3C5E /* EffectView.swift in Sources */,
 				516A629C2BD2A5E2003C3C5E /* AppDelegate.swift in Sources */,
 				516A62AD2BD2AC67003C3C5E /* WaveShader.metal in Sources */,
